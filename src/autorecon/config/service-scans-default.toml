@@ -107,17 +107,6 @@ ignore-service-names = [
         pattern = 'WebDAV is ENABLED'
 
     [[http.scan]]
-    name = 'curl-index'
-    command = 'curl -sSik {scheme}://{address}:{port}/ -m 10 2>&1 | tee "{scandir}/{protocol}_{port}_{scheme}_index.html"'
-
-        [[http.scan.pattern]]
-        pattern = '(?i)Powered by [^\n]+'
-
-    [[http.scan]]
-    name = 'curl-robots'
-    command = 'curl -sSik {scheme}://{address}:{port}/robots.txt -m 10 2>&1 | tee "{scandir}/{protocol}_{port}_{scheme}_robots.txt"'
-
-    [[http.scan]]
     name = 'wkhtmltoimage'
     command = 'if hash wkhtmltoimage 2> /dev/null; then wkhtmltoimage --format png {scheme}://{address}:{port}/ {scandir}/{protocol}_{port}_{scheme}_screenshot.png; fi'
 
