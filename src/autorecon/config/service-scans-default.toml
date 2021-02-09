@@ -123,7 +123,7 @@ ignore-service-names = [
 
     [[http.scan]]
     name = 'whatweb'
-    command = 'whatweb --color=never --no-errors -a 3 -v {scheme}://{address}:{port} 2>&1 | tee "{scandir}/{protocol}_{port}_{scheme}_whatweb.txt"'
+    command = 'whatweb --color=never --no-errors -a 3 -v {scheme}://{address}:{port} --log-json="{scandir}/{protocol}_{port}_{scheme}_whatweb.json"'
 
     [[http.scan]]
     name = 'nikto'
