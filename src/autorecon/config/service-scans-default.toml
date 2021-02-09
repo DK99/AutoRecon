@@ -107,10 +107,6 @@ ignore-service-names = [
         pattern = 'WebDAV is ENABLED'
 
     [[http.scan]]
-    name = 'wkhtmltoimage'
-    command = 'if hash wkhtmltoimage 2> /dev/null; then wkhtmltoimage --format png {scheme}://{address}:{port}/ {scandir}/{protocol}_{port}_{scheme}_screenshot.png; fi'
-
-    [[http.scan]]
     name = 'whatweb'
     command = 'whatweb --color=never --no-errors -a 3 -v {scheme}://{address}:{port} --log-json="{scandir}/{protocol}_{port}_{scheme}_whatweb.json"'
 
