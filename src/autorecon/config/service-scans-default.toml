@@ -127,7 +127,7 @@ ignore-service-names = [
 
     [[http.scan]]
     name = 'nikto'
-    command = 'nikto -ask=no -h {scheme}://{address}:{port} 2>&1 | tee "{scandir}/{protocol}_{port}_{scheme}_nikto.txt"'
+    command = 'nikto -ask=no -h {scheme}://{address}:{port} -Format=csv -output="{scandir}/{protocol}_{port}_{scheme}_nikto.csv"'
 
     [[http.scan]]
     name = 'gobuster'
