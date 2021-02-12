@@ -211,12 +211,6 @@ service-names = [
     name = 'nmap-mssql'
     command = 'nmap {nmap_extra} -sV -p {port} --script="banner,(ms-sql* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" --script-args="mssql.instance-port={port},mssql.username=sa,mssql.password=sa" -oN "{scandir}/{protocol}_{port}_mssql_nmap.txt" -oX "{scandir}/xml/{protocol}_{port}_mssql_nmap.xml" {address}'
 
-    [[mssql.manual]]
-    description = '(sqsh) interactive database shell'
-    commands = [
-        'sqsh -U <username> -P <password> -S {address}:{port}'
-    ]
-
 [mysql]
 
 service-names = [
@@ -350,12 +344,6 @@ service-names = [
     [[rpc.scan]]
     name = 'nmap-msrpc'
     command = 'nmap {nmap_extra} -sV -p {port} --script="banner,msrpc-enum,rpc-grind,rpcinfo" -oN "{scandir}/{protocol}_{port}_rpc_nmap.txt" -oX "{scandir}/xml/{protocol}_{port}_rpc_nmap.xml" {address}'
-
-    [[rpc.manual]]
-    description = 'RPC Client:'
-    commands = [
-        'rpcclient -p {port} -U "" {address}'
-    ]
 
 [sip]
 
