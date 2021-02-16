@@ -1,7 +1,3 @@
-# Configurable Variables
-username_wordlist = '/usr/share/seclists/Usernames/top-usernames-shortlist.txt'
-password_wordlist = '/usr/share/seclists/Passwords/darkweb2017-top100.txt'
-
 [all-services] # Define scans here that you want to run against all services.
 
 service-names = [
@@ -76,13 +72,6 @@ service-names = [
         [[ftp.scan.pattern]]
         description = 'Anonymous FTP Enabled!'
         pattern = 'Anonymous FTP login allowed'
-
-    [[ftp.manual]]
-    description = 'Bruteforce logins:'
-    commands = [
-        'hydra -L "{username_wordlist}" -P "{password_wordlist}" -e nsr -s {port} -o "{scandir}/{protocol}_{port}_ftp_hydra.txt" ftp://{address}',
-        'medusa -U "{username_wordlist}" -P "{password_wordlist}" -e ns -n {port} -O "{scandir}/{protocol}_{port}_ftp_medusa.txt" -M ftp -h {address}'
-    ]
 
 [http]
 
@@ -269,24 +258,13 @@ service-names = [
     command = 'oscanner -v -s {address} -P {port} 2>&1 | tee "{scandir}/{protocol}_{port}_oracle_scanner.txt"'
 
     [[oracle.manual]]
-    description = 'Brute-force SIDs using Nmap'
-    command = 'nmap {nmap_extra} -sV -p {port} --script="banner,oracle-sid-brute" -oN "{scandir}/{protocol}_{port}_oracle_sid-brute_nmap.txt" -oX "{scandir}/xml/{protocol}_{port}_oracle_sid-brute_nmap.xml" {address}'
-
-    [[oracle.manual]]
     description = 'Install ODAT (https://github.com/quentinhardy/odat) and run the following commands:'
     commands = [
         'odat tnscmd -s {address} -p {port} --ping 2>&1 | tee "{scandir}/{protocol}_{port}_oracle_odat_tnscmd.txt"',
         'odat tnscmd -s {address} -p {port} --version | tee "{scandir}/{protocol}_{port}_oracle_odat_tnscmd_version.txt"',
         'odat tnscmd -s {address} -p {port} --status | tee "{scandir}/{protocol}_{port}_oracle_odat_tnscmd_status.txt"',
         'odat sidguesser -s {address} -p {port} | tee "{scandir}/{protocol}_{port}_oracle_odat_sidguesser.txt"',
-        'odat passwordguesser -s {address} -p {port} -d <sid> --accounts-file accounts/accounts_multiple.txt | tee "{scandir}/{protocol}_{port}_oracle_odat_passwordguesser.txt"',
         'odat tnspoison -s {address} -p {port} -d <sid> --test-module | tee "{scandir}/{protocol}_{port}_oracle_odat_tnspoison.txt"'
-    ]
-
-    [[oracle.manual]]
-    description = 'Install Oracle Instant Client (https://github.com/rapid7/metasploit-framework/wiki/How-to-get-Oracle-Support-working-with-Kali-Linux) and then bruteforce with patator:'
-    commands = [
-        'patator oracle_login host={address} port={port} user=COMBO00 password=COMBO01 0=/usr/share/seclists/Passwords/Default-Credentials/oracle-betterdefaultpasslist.txt -x ignore:code=ORA-01017 -x ignore:code=ORA-28000'
     ]
 
 [pop3]
@@ -310,13 +288,6 @@ service-names = [
     [[rdp.scan]]
     name = 'nmap-rdp'
     command = 'nmap {nmap_extra} -sV -p {port} --script="banner,(rdp* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" -oN "{scandir}/{protocol}_{port}_rdp_nmap.txt" -oX "{scandir}/xml/{protocol}_{port}_rdp_nmap.xml" {address}'
-
-    [[rdp.manual]]
-    description = 'Bruteforce logins:'
-    commands = [
-        'hydra -L "{username_wordlist}" -P "{password_wordlist}" -e nsr -s {port} -o "{scandir}/{protocol}_{port}_rdp_hydra.txt" rdp://{address}',
-        'medusa -U "{username_wordlist}" -P "{password_wordlist}" -e ns -n {port} -O "{scandir}/{protocol}_{port}_rdp_medusa.txt" -M rdp -h {address}'
-    ]
 
 [rmi]
 
@@ -365,12 +336,6 @@ service-names = [
     name = 'nmap-ssh'
     command = 'nmap {nmap_extra} -sV -p {port} --script="banner,ssh2-enum-algos,ssh-hostkey,ssh-auth-methods" -oN "{scandir}/{protocol}_{port}_ssh_nmap.txt" -oX "{scandir}/xml/{protocol}_{port}_ssh_nmap.xml" {address}'
 
-    [[ssh.manual]]
-    description = 'Bruteforce logins:'
-    commands = [
-        'hydra -L "{username_wordlist}" -P "{password_wordlist}" -e nsr -s {port} -o "{scandir}/{protocol}_{port}_ssh_hydra.txt" ssh://{address}',
-        'medusa -U "{username_wordlist}" -P "{password_wordlist}" -e ns -n {port} -O "{scandir}/{protocol}_{port}_ssh_medusa.txt" -M ssh -h {address}'
-    ]
 [smb]
 
 service-names = [
@@ -431,10 +396,6 @@ service-names = [
     [[smtp.scan]]
     name = 'nmap-smtp'
     command = 'nmap {nmap_extra} -sV -p {port} --script="banner,(smtp* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" -oN "{scandir}/{protocol}_{port}_smtp_nmap.txt" -oX "{scandir}/xml/{protocol}_{port}_smtp_nmap.xml" {address}'
-
-    [[smtp.scan]]
-    name = 'smtp-user-enum'
-    command = 'smtp-user-enum -M VRFY -U "{username_wordlist}" -t {address} -p {port} 2>&1 | tee "{scandir}/{protocol}_{port}_smtp_user-enum.txt"'
 
 [snmp]
 
