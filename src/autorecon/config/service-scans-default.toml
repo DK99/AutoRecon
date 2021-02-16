@@ -265,10 +265,6 @@ service-names = [
     command = 'tnscmd10g version -h {address} -p {port} 2>&1 | tee "{scandir}/{protocol}_{port}_oracle_tnscmd_version.txt"'
 
     [[oracle.scan]]
-    name = 'oracle-tnscmd-version'
-    command = 'tnscmd10g version -h {address} -p {port} 2>&1 | tee "{scandir}/{protocol}_{port}_oracle_tnscmd_version.txt"'
-
-    [[oracle.scan]]
     name = 'oracle-scanner'
     command = 'oscanner -v -s {address} -P {port} 2>&1 | tee "{scandir}/{protocol}_{port}_oracle_scanner.txt"'
 
