@@ -174,7 +174,7 @@ service-names = [
 
     [[ldap.scan]]
     name = 'enum4linux'
-    command = 'enum4linux -a -M -l -d {address} 2>&1 | tee "{scandir}/enum4linux.txt"'
+    command = 'enum4linux -a -M -l -d {address} 2>&1 | tee "{scandir}/{protocol}_{port}_enum4linux.txt"'
     run_once = true
     ports.tcp = [139, 389, 445]
     ports.udp = [137]
@@ -350,7 +350,7 @@ service-names = [
 
     [[smb.scan]]
     name = 'enum4linux'
-    command = 'enum4linux -a -M -l -d {address} 2>&1 | tee "{scandir}/enum4linux.txt"'
+    command = 'enum4linux -a -M -l -d {address} 2>&1 | tee "{scandir}/{protocol}_{port}_enum4linux.txt"'
     run_once = true
     ports.tcp = [139, 389, 445]
     ports.udp = [137]
