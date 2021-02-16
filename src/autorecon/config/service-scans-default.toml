@@ -357,7 +357,7 @@ service-names = [
 
     [[sip.scan]]
     name = 'svwar'
-    command = 'svwar -D -m INVITE -p {port} {address}'
+    command = 'svwar -D -m INVITE -p {port} {address} 2>&1 | tee "{scandir}/{protocol}_{port}_svwar.txt"'
 
 [ssh]
 
